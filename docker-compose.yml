@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+    caddy:
+        image: siwecos/caddy:latest
+        restart: always
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./Caddyfile:/etc/Caddyfile:ro
+            - caddy_certs:/root/.caddy
+            - ./blockpage.html:/srv/blockpage.html:ro
+
+    siwecos-business-layer:
+        image: siwecos/siwecos-business-layer:latest
+        restart: always
+        depends_on:
+            - mariadb
+            - redis
+        environment:
+            - APP_URL=http://siwecos-business-layer
+            - APP_DEBUG=false
+            - CORE_API_SCAN_START_URL=http://172.17.0.1:8000/api/v2/scan
+            - LOG_CHANNEL=stderr
+            - DB_HOST=mariadb
+            - DB_DATABASE=siwecos-bla
+            - DB_USERNAME=siwecos_user
+            - DB_PASSWORD=changeme
+            - TECHNICAL_SUPPORT_MAIL=
+            - MAIL_HOST=
+            - MAIL_USERNAME=
+            - MAIL_PASSWORD=
+            - MAIL_PORT=
+            - MAIL_ENCRYPTION=tls
+
+    mariadb:
+        image: mariadb
+        restart: always
+        volumes:
+            - db:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=changeme
+            - MYSQL_DATABASE=siwecos-bla
+            - MYSQL_USER=siwecos_user
+            - MYSQL_PASSWORD=changeme
+
+    redis:
+        image: redis
+        restart: always
+
+volumes:
+    db:
+    caddy_certs:
