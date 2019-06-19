@@ -9,9 +9,9 @@ services:
             - 80:80
             - 443:443
         volumes:
-            - ./Caddyfile:/etc/Caddyfile:ro
+            - ./caddy/Caddyfile:/etc/Caddyfile:ro
             - caddy_certs:/root/.caddy
-            - ./blockpage.html:/srv/blockpage.html:ro
+            - ./caddy/blockpage.html:/srv/blockpage.html:ro
 
     siwecos-business-layer:
         image: siwecos/siwecos-business-layer:latest
@@ -19,6 +19,8 @@ services:
         depends_on:
             - mariadb
             - redis
+        volumes:
+            - ./service-account.json:/var/www/html/service-account.json
         environment:
             - APP_URL=http://siwecos-business-layer
             - APP_DEBUG=false
@@ -28,12 +30,16 @@ services:
             - DB_DATABASE=siwecos-bla
             - DB_USERNAME=siwecos_user
             - DB_PASSWORD=changeme
+            - FILESYSTEM_DRIVER=gcs
+            - GOOGLE_CLOUD_STORAGE_BUCKET=
             - TECHNICAL_SUPPORT_MAIL=
+            - MAIL_DRIVER=smtp
             - MAIL_HOST=
             - MAIL_USERNAME=
             - MAIL_PASSWORD=
-            - MAIL_PORT=
+            - MAIL_PORT=587
             - MAIL_ENCRYPTION=tls
+            - LOGSTASH_HOST=logstash
 
     mariadb:
         image: mariadb
@@ -49,6 +55,17 @@ services:
     redis:
         image: redis
         restart: always
+
+    logstash:
+        build:
+            context: logstash/
+            args:
+                ELK_VERSION: 7.1.1
+        volumes:
+            - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+            - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+        environment:
+            LS_JAVA_OPTS: "-Xmx256m -Xms256m"
 
 volumes:
     db:
