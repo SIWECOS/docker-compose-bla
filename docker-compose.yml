@@ -41,6 +41,17 @@ services:
             - MAIL_ENCRYPTION=tls
             - LOGSTASH_HOST=logstash
 
+    logstash:
+        build:
+            context: logstash/
+            args:
+                ELK_VERSION: 7.1.1
+        volumes:
+            - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+            - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+        environment:
+            LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+
     mariadb:
         image: mariadb
         restart: always
