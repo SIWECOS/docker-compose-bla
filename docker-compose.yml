@@ -24,6 +24,7 @@ services:
         environment:
             - APP_URL=http://siwecos-business-layer
             - APP_DEBUG=false
+            - APP_ENV=production
             - CORE_API_SCAN_START_URL=http://172.17.0.1:8000/api/v2/scan
             - LOG_CHANNEL=stderr
             - DB_HOST=mariadb
