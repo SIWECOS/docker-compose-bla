@@ -43,6 +43,8 @@ services:
             - ELASTICSEARCH_HOST=elasticsearch
             - ELASTICSEARCH_USER=elastic
             - ELASTICSEARCH_PASS=changeme
+            - SCANNER_SCORE_WEIGHT_DOMXSS=0
+
 
     mariadb:
         image: mariadb
