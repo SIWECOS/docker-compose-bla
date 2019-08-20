@@ -31,8 +31,10 @@ services:
             - DB_DATABASE=siwecos-bla
             - DB_USERNAME=siwecos_user
             - DB_PASSWORD=changeme
-            - FILESYSTEM_DRIVER=gcs
-            - GOOGLE_CLOUD_STORAGE_BUCKET=
+            - FILESYSTEM_DRIVER=sftp
+            - SFTP_HOST=
+            - SFTP_USER=
+            - SFTP_PASS=
             - TECHNICAL_SUPPORT_MAIL=
             - MAIL_DRIVER=smtp
             - MAIL_HOST=
