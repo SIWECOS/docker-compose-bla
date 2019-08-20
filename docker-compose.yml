@@ -35,6 +35,7 @@ services:
             - SFTP_HOST=
             - SFTP_USER=
             - SFTP_PASS=
+            - SFTP_DIR=
             - TECHNICAL_SUPPORT_MAIL=
             - MAIL_DRIVER=smtp
             - MAIL_HOST=
