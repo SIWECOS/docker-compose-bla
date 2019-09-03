@@ -1,7 +1,6 @@
-version: '3'
+version: "3"
 
 services:
-
     caddy:
         image: siwecos/caddy
         restart: always
@@ -48,9 +47,8 @@ services:
             - ELASTICSEARCH_PASS=changeme
             - SCANNER_SCORE_WEIGHT_DOMXSS=0
 
-
     mariadb:
-        image: mariadb
+        image: mariadb:10.4
         restart: always
         volumes:
             - db:/var/lib/mysql
@@ -61,7 +59,7 @@ services:
             - MYSQL_PASSWORD=changeme
 
     redis:
-        image: redis
+        image: redis:5.0
         restart: always
 
     watchtower:
