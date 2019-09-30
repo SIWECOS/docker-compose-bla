@@ -46,6 +46,7 @@ services:
             - ELASTICSEARCH_USER=elastic
             - ELASTICSEARCH_PASS=changeme
             - SCANNER_SCORE_WEIGHT_DOMXSS=0
+            - SCANNER_SCORE_WEIGHT_TLS=3
 
     mariadb:
         image: mariadb:10.4
