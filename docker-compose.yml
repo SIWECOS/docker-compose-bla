@@ -29,7 +29,7 @@ services:
             - APP_DEBUG=false
             - APP_ENV=production
             - CORE_API_SCAN_START_URL=http://172.17.0.1:8000/api/v2/scan
-            - CRAWLER_START_URLL=http://siwecos-crawler:8080/validate
+            - CRAWLER_START_URL=http://siwecos-crawler:8080/validate
             - LOG_CHANNEL=stderr
             - DB_HOST=mariadb
             - DB_DATABASE=siwecos-bla
